@@ -37,10 +37,8 @@ public class PromptStuffingController {
 	@GetMapping("/disney")
 	public String askTravelAssistantWithContext(
 			@RequestParam(defaultValue = "What are the featured stories in Disney Tales of Magic night show in Paris Disneyland", required = false) String question) throws IOException {
-
 		String context = readResource(disneyResource);
 		String response = chatClient.prompt()
-				.user(question)
 				.user(u -> u.text(prompt).params(Map.of("context", context, "question", question)))
 				.call()
 				.content();

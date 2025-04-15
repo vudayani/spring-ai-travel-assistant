@@ -3,7 +3,7 @@ package com.example.springai;
 import java.util.Map;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -40,7 +40,7 @@ public class RagController {
 
 		String response = chatClient.prompt()
 				.user(u -> u.text(ragPrompt).params(Map.of("question", question)))
-				.advisors(new QuestionAnswerAdvisor(simpleVectorStore))
+				.advisors(new QuestionAnswerAdvisor(this.simpleVectorStore))
 				.call()
 				.content();
 
