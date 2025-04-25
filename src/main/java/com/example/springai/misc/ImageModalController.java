@@ -7,14 +7,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-public class MultiModalController {
+@RestController
+public class ImageModalController {
 	
 	private final ChatClient chatClient;
-    @Value("classpath:/images/paris-eiffel-tower.png")
+    @Value("classpath:/images/java-open-ai.png")
     Resource sampleImage;
 
-    public MultiModalController(ChatClient.Builder builder) {
+    public ImageModalController(ChatClient.Builder builder) {
         this.chatClient = builder.build();
     }
 
@@ -23,7 +25,7 @@ public class MultiModalController {
         return chatClient.prompt()
                 .user(u -> u
                         .text("Can you please explain what you see in the following image?")
-                        .media(MimeTypeUtils.IMAGE_JPEG,sampleImage)
+                        .media(MimeTypeUtils.IMAGE_PNG,sampleImage)
                 )
                 .call()
                 .content();
